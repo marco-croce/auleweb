@@ -1,0 +1,97 @@
+<link rel="stylesheet" href="styles/modificaadmin.css" type="text/css" >
+
+<h2> <#if (evento.aula)??> ${evento.nome} - aula ${evento.aula.nome} il ${evento.dataInizio?datetime.iso?string('dd-MM')} </#if> </h2>
+
+<form method="get" action="eventiadmin">
+    <div class="container">
+        <input type="hidden" name="n" value="${evento.key!0}" >
+        <div class="row">
+            <div class="ten columns">
+                Nome <input type="text" name="nome" value="${evento.nome}" required >  
+                Data <input type="date" name="data" <#if (evento.dataInizio)??> value="${evento.dataInizio?datetime.iso?string('yyyy-MM-dd')}" </#if> required >
+            </div>
+            <div class ="ten columns">
+                <label for="ora_inizio" /> Ora di inizio <input type="time" step="900" id="ora_inizio" min="08:00" max="20:00" name="ora_inizio" <#if (evento.dataInizio)??> value="${evento.dataInizio?datetime.iso?string('HH:mm')}" </#if> required>
+                <label for="ora_fine" /> Ora di fine <input type="time" step="900" id="ora_fine" name="ora_fine" min="08:15" max="20:00" <#if (evento.dataFine)??> value="${evento.dataFine?datetime.iso?string('HH:mm')}" </#if> required>
+            </div>
+            <div class ="ten columns">
+                Responsabile
+                <select id="emailResponsabile" name="emailResponsabile" required>
+                    <#if responsabili??>
+                    <#if (responsabili?size>0)>
+                    <#list responsabili as responsabile>
+                    <option value="${responsabile}" <#if evento.emailResponsabile == responsabile> selected </#if> > ${responsabile} </option>
+                    </#list>  
+                    </#if>
+                    </#if>
+                </select>
+                <label for="resp">Aggiungi un responsabile</label>
+                <input type="text" id="resp" placeholder="Digita l'email del resonsabile" autocomplete="off" >
+                <button type="button" id="addresp" name="newresp" value="AGGIUNGI" onclick="aggiungiValoreSelect('emailResponsabile', 'resp', 'addresp')">AGGIUNGI</button>
+            </div>
+            <div class="ten columns">
+                Descrizione <input type="text" name="descrizione" value="${evento.descrizione}" required >
+                Aula <select name="aula" required>
+                    <#if aule??>
+                    <#if (aule?size>0)>
+                    <#list aule as aula>
+                    <option value="${aula.key}" <#if (evento.aula)??> <#if evento.aula.key == aula.key> selected </#if> </#if> > ${aula.nome} ${aula.edificio} </option>
+                    </#list>  
+                    </#if>
+                    </#if>
+                </select>
+                Tipologia <select name="tipologia" id="tipologia" required>
+                    <#if tipologie??>
+                    <#if (tipologie?size>0)>
+                    <#list tipologie as tipologiaEvento>
+                    <option value="${tipologiaEvento}" <#if (evento.tipologia)??> <#if evento.tipologia == tipologiaEvento> selected </#if> </#if> > ${tipologiaEvento} </option>
+                    </#list>  
+                    </#if>
+                    </#if>
+                </select>
+            </div>
+            <div class="ten columns">
+                Corso <select name="corso" id="corso" <#if (evento.nomeCorso??)> <#else> disabled </#if> >
+                    <option value="" <#if (evento.nomeCorso??)> <#else> selected </#if> > Seleziona il corso </option>
+                    <#if corsi??>
+                    <#if (corsi?size>0)>
+                    <#list corsi as corso>
+                    <option value="${corso}" <#if (evento.nomeCorso)??> <#if evento.nomeCorso == corso> selected </#if> </#if> > ${corso} </option>
+                    </#list>  
+                    </#if>
+                    </#if>
+                </select>
+                Ripetizione <select name="tipologiaRicorrenza" id="tipologiaRicorrenza" >
+                    <option value="" <#if (evento.tipologiaRicorrenza??)> <#else> selected </#if> > NESSUNA </option>
+                    <#if ricorrenze??>
+                    <#if (ricorrenze?size>0)>
+                    <#list ricorrenze as ricorrenza>
+                    <option value="${ricorrenza}" <#if (evento.tipologiaRicorrenza)??> <#if evento.tipologiaRicorrenza == ricorrenza> selected </#if> </#if> > ${ricorrenza} </option>
+                    </#list>  
+                    </#if>
+                    </#if>
+                </select>
+                fino al <input type="date" name="data_fine_ricorrenza" id="data_fine_ricorrenza" <#if (evento.dataFineRicorrenza)??> value="${evento.dataFineRicorrenza?date.iso?string('yyyy-MM-dd')}" <#else> disabled </#if> >  
+            </div>
+            <div class="ten columns">
+                <input type="submit" name="update" value="CONFERMA" ></div>
+        </div>  
+        <#if (evento.key??)>
+        <div>
+            <input type="submit" name="delete" value="ELIMINA EVENTO" >
+        </div>
+        </#if>
+
+        <br>
+
+        <div class="two columns">
+            <a name="back" value="INDIETRO" href="eventiadmin" >
+                Torna alla gestione degli eventi 
+            </a>
+        </div>
+
+
+    </div>
+</form>
+
+<script type="text/javascript" src="js/select.js"></script>

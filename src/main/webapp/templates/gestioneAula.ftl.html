@@ -1,0 +1,115 @@
+<link rel="stylesheet" href="styles/modificaadmin.css" type="text/css" >
+
+<h2> Aula <#if (aula)??> ${aula.nome} presso ${aula.luogo} edificio ${aula.edificio} </#if> </h2>
+
+<form method="get" action="auleadmin">
+    <div class="container">
+        <input type="hidden" name="n" value="${aula.key!0}" >
+        <div class="row">
+            <div class="ten columns">
+                Nome <input type="text" name="nome" value="${aula.nome}" required >
+                Luogo <input type="text" name="luogo" value="${aula.luogo}" required >
+                Edificio <input type="text" name="edificio" value="${aula.edificio}" required >
+                Responsabile
+                <select id="emailResponsabile" name="emailResponsabile">
+                    <#if responsabili??>
+                    <#if (responsabili?size>0)>
+                    <#list responsabili as responsabile>
+                    <option value="${responsabile}" <#if aula.emailResponsabile == responsabile> selected </#if> > ${responsabile} </option>
+                    </#list>  
+                    </#if>
+                    </#if>
+                </select>
+                <label for="resp">Aggiungi un nuovo responsabile</label>
+                <input type="text" id="resp" placeholder="Digita l'email del resonsabile" autocomplete="off">
+                <button type="button" id="addresp" name="newresp" value="AGGIUNGI" onclick="aggiungiValoreSelect('emailResponsabile', 'resp', 'addresp')">AGGIUNGI RESPONSABILE</button>
+            </div>
+            <div class="ten columns">
+                Piano <input type="number" name="piano" value="${aula.piano}" >
+                Capienza <input type="number" name="capienza" value="${aula.capienza}" >
+                Prese di rete <input type="number" name="rete" value="${aula.numeroPreseRete}" >
+                Prese elettriche <input type="number" name="elettriche" value="${aula.numeroPreseElettriche}" >
+            </div>
+            <div class="three columns">
+                Note <input type="text" name="note" value="${aula.note}" required >
+            </div>
+            <div class="two columns">
+                <input type="submit" name="update" value="CONFERMA" >
+            </div>
+        </div>
+
+        <br>
+
+        <#if (unassigned_gruppi?size>0)>
+        <div class="row">
+            <div class="four columns clabel">Assegna il gruppo all'aula</div>
+            <div class="ten columns"> <select name="addgruppo">
+                    <#list unassigned_gruppi as gruppo>
+                    <option value="${gruppo.key}">
+                        ${gruppo.nome}
+                    </option>
+                    </#list>            
+                </select>
+                <div class="two columns"><input type="submit" name="addg" value="ASSEGNA" ></div>
+            </div>
+            </#if>
+
+            <#if (assigned_gruppi?size>0)>
+            <div class="row">
+                <div class="four columns clabel">Rimuovi l'aula dal gruppo</div>
+                <div class="ten columns"><select name="removegruppo">
+                        <#list assigned_gruppi as gruppo>
+                        <option value="${gruppo.key}">
+                            ${gruppo.nome}
+                        </option>
+                        </#list>            
+                    </select>
+                </div>
+                <div class="two columns"><input type="submit" name="removeg" value="RIMUOVI" ></div>
+            </div>      
+            </#if>
+
+            <br>
+
+            <#if (unassigned_attrezzatura?size>0)>
+            <div class="row">
+                <div class="four columns clabel">Aggiungi attrezzatura</div>
+                <div class="five columns"> <select name="addattrezzatura">
+                        <#list unassigned_attrezzatura as attrezzatura>
+                        <option value="${attrezzatura.key}">
+                            ${attrezzatura.descrizione} (${attrezzatura.numeroSeriale})
+                        </option>
+                        </#list>            
+                    </select>
+                    <div class="two columns"><input type="submit" name="adda" value="AGGIUNGI" ></div>
+                </div>
+                </#if>
+
+                <#if (assigned_attrezzatura?size>0)>
+                <div class="row">
+                    <div class="four columns clabel">Rimuovi attrezzatura</div>
+                    <div class="five columns"><select name="removeattrezzatura">
+                            <#list assigned_attrezzatura as attrezzatura>
+                            <option value="${attrezzatura.key}">
+                                ${attrezzatura.descrizione} (${attrezzatura.numeroSeriale})
+                            </option>
+                            </#list>            
+                        </select>
+                    </div>
+                    <div class="two columns"><input type="submit" name="removea" value="RIMUOVI" ></div>
+                </div>
+                </#if>
+
+
+                <div class="two columns">
+                    <a name="back" value="INDIETRO" href="auleadmin">
+                        Torna alla gestione delle aule 
+                    </a>
+                </div>
+
+
+            </div>
+
+            </form>
+
+            <script type="text/javascript" src="js/select.js"></script>

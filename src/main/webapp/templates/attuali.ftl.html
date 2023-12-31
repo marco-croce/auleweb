@@ -1,0 +1,70 @@
+<head>
+    <title>AuleWeb - Eventi Attuali</title>
+    <link rel="stylesheet" href="styles/styles.css" type="text/css" >
+    <link rel="stylesheet" href="styles/modal.css" type="text/css" >
+    <script src="js/dettagliEvento.js"></script>
+</head>
+
+<body>
+    <h1>Eventi attuali</h1>
+
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Inizio</th>
+                    <th>Fine</th>
+                    <th>Aula</th>
+                    <th>Evento</th>
+                    <th>Descrizione</th>
+                </tr>
+            </thead>
+            <tbody>
+                <#if eventi??>
+                <#list eventi as evento>
+
+                <tr data-nome="${evento.nome}"
+                    data-data="${evento.dataInizio?datetime.iso?string('dd-MM-yyyy')}"
+                    data-inizio="${evento.dataInizio?datetime.iso?string('HH:mm')}"
+                    data-fine="${evento.dataFine?datetime.iso?string('HH:mm')}"
+                    data-emailResponsabile="${evento.emailResponsabile}"
+                    data-descrizione="${evento.descrizione}"
+                    data-tipologia="${evento.tipologia}"
+                    data-aulaNome="${evento.aula.nome}"
+                    <#if evento.nomeCorso??>
+                    data-nomeCorso="${evento.nomeCorso}"
+                    <#else>
+                    data-nomeCorso="N.D."
+                    </#if>
+                    <#if evento.aula.getAttrezziString()??>
+                    data-attrezzi="${evento.aula.getAttrezziString()}">
+                    </#if>
+                    <td>${evento.dataInizio?datetime.iso?string('HH:mm')}</td>
+                    <td>${evento.dataFine?datetime.iso?string('HH:mm')}</td>
+                    <td>${evento.aula.nome} ${evento.aula.edificio} ${evento.aula.luogo} </td>
+                    <td>${evento.nome}</td>
+                    <td>${evento.descrizione}</td>
+                </tr>
+
+                </#list>
+                </#if>
+            </tbody>
+        </table>
+    </div>
+
+    <div id="modal" style="display: none;">
+        <p id="modal-nome"></p>
+        <p id="modal-data"></p>
+        <p id="modal-inizio"></p>
+        <p id="modal-fine"></p>
+        <p id="modal-descrizione"></p>
+        <p id="modal-nomeCorso"></p>
+        <p id="modal-emailResponsabile"></p>
+        <p id="modal-tipologia"></p>
+        <p id="modal-nomeAula"></p>
+        <p id="modal-attrezzatura"></p>
+        <button id="modal-close">Chiudi</button>
+    </div>
+
+</body>
+</html>

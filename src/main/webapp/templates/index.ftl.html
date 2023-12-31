@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="it" dir="ltr">
+
+    <head>
+        <title> AuleWeb </title>
+        <link rel="stylesheet" href="styles/styles.css" type="text/css" >
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" crossorigin="anonymous" >
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css" crossorigin="anonymous" >
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script> 
+    </head>
+
+    <body>
+        <#if (navbar)??>
+        <#include navbar>
+        </#if>
+        <#include content_tpl>
+    </body>
+
+</html>

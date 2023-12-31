@@ -1,0 +1,23 @@
+.login {
+    background-color: #222;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.login-box {
+    text-decoration-color: white;
+    background-color: #555;
+    border: 1px solid #ccc;
+    padding: 20px;
+    border-radius: 5px;
+    max-width: 400px;
+    width: 100%;
+}
+.form-group{
+    color: white;
+}
+.text-center{
+    color: white
+}

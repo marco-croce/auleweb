@@ -1,0 +1,94 @@
+<head>
+    <title>AuleWeb</title>
+    <link rel="stylesheet" href="styles/styles.css" type="text/css" >
+    <link rel="stylesheet" href="styles/modal.css" type="text/css" >
+</head>
+
+<body>
+    <h1>Eventi 
+        <#if (gruppo??)> del ${gruppo} </#if> 
+        <#if (aula??)> in aula ${aula} </#if> 
+        <#if (corso??)> per il corso di ${corso} </#if> </h1>
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Data</th>
+                    <th>Inizio</th>
+                    <th>Fine</th>
+                    <th>Aula</th>
+                    <th>Nome</th>
+                    <th>Descrizione</th>
+                </tr>
+            </thead>
+            <tbody>
+                <#if (eventi?size>0)>
+                <#list eventi as evento>
+                <tr data-nome="${evento.nome}"
+                    data-data="${evento.dataInizio?datetime.iso?string('dd-MM-yyyy')}"
+                    data-inizio="${evento.dataInizio?datetime.iso?string('HH:mm')}"
+                    data-fine="${evento.dataFine?datetime.iso?string('HH:mm')}"
+                    data-emailResponsabile="${evento.emailResponsabile}"
+                    data-descrizione="${evento.descrizione}"
+                    data-tipologia="${evento.tipologia}"
+                    data-aulaNome="${evento.aula.nome}"
+                    <#if evento.nomeCorso??>
+                    data-nomeCorso="${evento.nomeCorso}"
+                    <#else>
+                    data-nomeCorso="N.D."
+                    </#if>
+                    <#if evento.aula.getAttrezziString()??>
+                    data-attrezzi="${evento.aula.getAttrezziString()}">
+                    </#if>
+                    <td>${evento.dataInizio?datetime.iso?string('dd-MM-yyyy')}</td>
+                    <td>${evento.dataInizio?datetime.iso?string('HH:mm')}</td>
+                    <td>${evento.dataFine?datetime.iso?string('HH:mm')}</td>
+                    <td>${evento.aula.nome}</td>
+                    <td>${evento.nome}</td>
+                    <td>${evento.descrizione}</td>
+                </tr>
+                </#list>
+                </#if>
+            </tbody>
+        </table>
+    </div>
+    <div id="modal" style="display: none;">
+        <p id="modal-nome"></p>
+        <p id="modal-data"></p>
+        <p id="modal-inizio"></p>
+        <p id="modal-fine"></p>
+        <p id="modal-descrizione"></p>
+        <p id="modal-nomeCorso"></p>
+        <p id="modal-emailResponsabile"></p>
+        <p id="modal-tipologia"></p>
+        <p id="modal-nomeAula"></p>
+        <p id="modal-attrezzatura"></p>
+        <button id="modal-close">Chiudi</button>
+    </div>
+
+    <br><br><br>
+
+    <div class="down">
+        <#if (download_corso??)>
+        <form method="get" action="index" >
+            <input type="submit" name="csv" value="Scarica tutti gli eventi relativi al corso">
+        </form>
+        </#if>
+
+        <#if (download_home??)>
+        <form method="get" action="index" >
+            <label for="first"> Dal </label>
+
+            <input type="date" id="first" name="first">
+
+            <label for="last"> al </label>
+
+            <input type="date" id="last" name="last">
+            <input type="submit" name="csv2" id="download" value="Scarica tutti gli eventi nell'intervallo di tempo" disabled >
+        </form>
+        </#if>
+    </div>
+
+</body>
+
+<script src="js/dettagliEvento.js"></script>

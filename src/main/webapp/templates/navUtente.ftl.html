@@ -1,0 +1,81 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="index" >AuleWeb</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto">
+
+                <li class="nav-item">
+                    <div class="input-group">
+                        <select class="form-select bg-dark text-light " id="gruppoDropdown" name="gruppoDropdown" > 
+                            <option value="" <#if (gruppo??)> <#else> selected </#if> >Gruppo</option>
+                            <#list gruppi as group>
+                            <option value="${group.key}" <#if (gruppo)??> <#if group.nome = gruppo > selected </#if> </#if> >${group.nome}</option>
+                            </#list>
+                        </select>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <div class="d-flex ct">
+                        <input type="week" name="week" id="week" value="" disabled >
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <div class="input-group">
+                        <select class="form-select bg-dark text-light" id="aulaDropdown" name="aulaDropdown" disabled>
+                            <option value="" selected>Aula</option>
+                            <#if (aule??)>
+                            <#list aule as aula>
+                            <option value="${aula.key}">${aula.nome}</option>
+                            </#list>
+                            </#if>
+                        </select>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <div class="input-group">
+                        <select class="form-select bg-dark text-light" id="corsoDropdown" name="corsoDropdown" disabled>
+                            <option value="" selected>Corso</option>
+                            <#if (corsi??)>
+                            <#list corsi as corso>
+                            <#if corso??>
+                            <option value="${corso}">${corso}</option>
+                            </#if>
+                            </#list>
+                            </#if>
+                        </select>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="bordi nav-link" id="attuali" href="#">Eventi attuali </a>
+                </li>
+
+                <li class="nav-item">
+                    <div class="d-flex ct">
+                        <a class="nav-link" id="giornata" href="#">
+                            Visualizza giorno
+                        </a>
+                        <input type="date" name="giorno" id="giorno" value="" class="ms-3" disabled >
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="login">
+                        Login
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<script src="js/dropdown.js"></script>

@@ -1,0 +1,62 @@
+<link rel="stylesheet" href="styles/modificaadmin.css" type="text/css" >
+
+<h2> <#if (gruppo)??> ${gruppo.nome} <#if (gruppo.descrizione??)> ${gruppo.descrizione} </#if> </#if> </h2>
+
+<form method="get" action="gruppiadmin">
+    <div class="container">
+        <input type="hidden" name="n" value="${gruppo.key!0}" >
+        <div class="row">
+            <div class="ten columns">
+                Nome <input type="text" name="nome" value="${gruppo.nome}" required>
+                Descrizione <input type="text" name="descrizione" <#if (gruppo)??> <#if (gruppo.descrizione??)> value="${gruppo.descrizione}" </#if> </#if> >
+                <div class="two columns">
+                    <input type="submit" name="update" value="CONFERMA" >
+                </div>
+                <#if (gruppo.key??)>
+                <div>
+                    <input type="submit" name="delete" value="ELIMINA GRUPPO" >
+                </div>
+                </#if>
+            </div>
+        </div>
+
+        <br>
+
+        <#if (unassigned_aule?size>0)>
+        <div class="row">
+            <div class="four columns clabel">Aggiungi un'aula al gruppo</div>
+            <div class="ten columns"> <select name="addaula">
+                    <#list unassigned_aule as aula>
+                    <option value="${aula.key}">
+                        ${aula.nome} ${aula.edificio}
+                    </option>
+                    </#list>            
+                </select>
+                <div class="two columns"><input type="submit" name="adda" value="AGGIUNGI" ></div>
+            </div>
+            </#if>
+
+            <#if (assigned_aule?size>0)>
+            <div class="row">
+                <div class="four columns clabel">Rimuovi un'aula dal gruppo</div>
+                <div class="ten columns"><select name="removeaula">
+                        <#list assigned_aule as aula>
+                        <option value="${aula.key}">
+                            ${aula.nome} ${aula.edificio}
+                        </option>
+                        </#list>            
+                    </select>
+                </div>
+                <div class="two columns"><input type="submit" name="removea" value="RIMUOVI" ></div>
+            </div>
+            </#if>
+        </div>
+
+        <div class="two columns">
+            <a name="back" value="INDIETRO" href="gruppiadmin">
+                Torna alla gestione dei gruppi 
+            </a>
+        </div>
+
+    </div>
+</form>

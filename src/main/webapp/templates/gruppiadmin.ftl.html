@@ -1,0 +1,100 @@
+<head>
+    <title>Gestione gruppi</title>
+    <link rel="stylesheet" href="styles/styles.css" type="text/css" >
+    <script src="js/error.js"></script>
+</head>
+
+<#if error??>
+<body onload="openModal()">
+<#else>
+<#if message??>
+<body onload="openModal()">
+<#else>
+<body>
+</#if>
+<body>
+</#if>
+    
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <#if error??>
+                    <i class="bi bi-exclamation-diamond-fill "></i>
+                    <h5 class="modal-title" id="exampleModalLongTitle"> 
+                        <i>Operazione non riuscita</i>
+                    </h5>
+                    <i class="bi bi-exclamation-diamond-fill "></i>
+                    </#if> 
+                    <#if message??>
+                    <h5 class="modal-title" id="exampleModalLongTitle"> 
+                        <i>Operazione riuscita</i>
+                    </h5>
+                    </#if> 
+                </div>
+                <div class="modal-body">
+                    <#if error??>
+                    <i>${error}</i>
+                    </#if>
+                    <#if message??>
+                    <i>${message}</i>
+                    </#if>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"> Chiudi </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<h1>Gestione gruppi</h1>
+
+<div class="table-container">
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Descrizione</th>
+                <th>Modifica / Elimina</th>
+            </tr>
+        </thead>
+        <tbody>
+            <#if (gruppi?size>0)>
+            <#list gruppi as gruppo>
+            <tr>
+                <td>${gruppo.nome}</td>
+                <#if (gruppo.descrizione)??>
+                <td>${gruppo.descrizione}</td>
+                <#else>
+                <td> N. D. </td>
+                </#if>
+                <td><a href="gruppiadmin?n=${gruppo.key}"><button class="btn btn-dark">Gestisci</button></a></td>
+            </tr>
+            </#list>
+            </#if>
+        </tbody>
+    </table>
+</div>
+
+<br> 
+
+<p><a href="gruppiadmin?n=0"><button class="btn btn-dark"> Inserisci un nuovo gruppo </button></a></p>
+
+<br>
+
+<h3> Configurazione dei gruppi</h3>
+
+<br>
+
+<form method="post" action="upload" enctype="multipart/form-data">
+    <p> Carica la configurazione mediante un file .csv <input type="file" name="fileconf" accept=".csv"/>
+        <input type="submit" name="upload" value="UPLOAD"/> </p>
+    <p> Scarica il template .csv per effettuare la configurazione 
+        <input type="submit" name="template" value="DOWNLOAD"/> </p>
+    <p> Scarica la configurazione attuale dei gruppi in .csv 
+        <input type="submit" name="download" value="DOWNLOAD"/> </p>
+</form>
+
+<br>
+
+</body>
